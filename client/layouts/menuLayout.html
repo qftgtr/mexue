@@ -1,0 +1,15 @@
+<template name="MenuLayout">
+  <div>
+    <a href="/manage/students">学生管理</a>
+    <div>学生评价</div>
+    <ul>
+      {{#each menuItems}}
+        {{> MenuItem}}
+      {{/each}}
+    </ul>
+  </div>
+</template>
+
+<template name="MenuItem">
+  <li><a href="{{url}}">{{text}}</a></li>
+</template>
