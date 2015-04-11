@@ -5,20 +5,11 @@ Template.StudentManager.events({
 
     var target = event.target;
 
-    var studentId = Students.insert({
+    var studentId = Meteor.call('newStudent', {
       name: target.name.value,
       grade: target.grade.value,
       class: target.class.value,
       number: target.number.value,
-      createdAt: new Date() // current time
-    });
-    
-    Evaluations.insert({
-      name: target.name.value,
-      studentId: studentId,
-      class: target.class.value,
-      number: target.number.value,
-      createdAt: new Date() // current time
     });
     
     // Clear form
@@ -34,7 +25,8 @@ Template.StudentManager.events({
     var post = this;
     var clickedItem = event.target; // the clicked element
     
-    if (!clickedItem.childElementCount) { // check if already clicked
+    if (clickedItem.tagName === 'TD') { // check if already clicked
+      console.log('clicked');
       var inputDiv = document.createElement('div');
       inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '"/>';
       
@@ -44,12 +36,17 @@ Template.StudentManager.events({
         var key = clickedItem.className,
             value = event.target.value,
             setTo = {};
+        
+        // change type to int
+        if (key === 'grade' || key === 'class' || key === 'number')
+          value = parseInt(value, 10);
+        
         setTo[key] = value;
         
         // remove input box
         event.target.parentElement && event.target.parentElement.removeChild(event.target);
         
-        Students.update(post._id, {$set: setTo}); // update db
+        //Students.update(post._id, {$set: setTo}); // update db
       }).keypress(function(event) {
         if (event.which === 13) event.target.blur();
       });
@@ -63,7 +60,7 @@ Template.StudentManager.events({
 Template.StudentManager.helpers({
   settings: function () {
     return {
-      collection: Students,
+      collection: DB.Students,
       rowsPerPage: 10,
       showFilter: true,
       fields: [
