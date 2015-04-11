@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-td {
+td, th {
   position: relative;
   height: 20px;
 }

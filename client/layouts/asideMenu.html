@@ -1,0 +1,31 @@
+<template name="HeaderMenuLayout">
+  <header>
+    <a href="/manage/students">学生管理</a>
+    <div>学生评价</div>
+    <ul>
+      {{#each item}}
+        {{> HeaderMenuItem }}
+      {{/each}}
+    </ul>
+  </header>
+</template>
+
+<template name="AsideMenuLayout">
+  <aside>
+    <a href="/manage/students">学生管理</a>
+    <div>学生评价</div>
+    <ul>
+      {{#each item}}
+        {{> AsideMenuItem }}
+      {{/each}}
+    </ul>
+  </aside>
+</template>
+
+<template name="AsideMenuItem">
+  <li><a href="{{url}}">{{text}}</a></li>
+</template>
+
+<template name="HeaderMenuItem">
+  <li><a href="{{url}}">{{text}}</a></li>
+</template>

@@ -5,14 +5,22 @@ Template.StudentManager.events({
 
     var target = event.target;
 
-    Students.insert({
+    var studentId = Students.insert({
       name: target.name.value,
       grade: target.grade.value,
       class: target.class.value,
       number: target.number.value,
       createdAt: new Date() // current time
     });
-
+    
+    Evaluations.insert({
+      name: target.name.value,
+      studentId: studentId,
+      class: target.class.value,
+      number: target.number.value,
+      createdAt: new Date() // current time
+    });
+    
     // Clear form
     target.name.value = '';
     //target.grade.value = 3;
@@ -38,6 +46,7 @@ Template.StudentManager.events({
             setTo = {};
         setTo[key] = value;
         
+        // remove input box
         event.target.parentElement && event.target.parentElement.removeChild(event.target);
         
         Students.update(post._id, {$set: setTo}); // update db

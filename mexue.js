@@ -1,5 +1,6 @@
-EvalGrades = new Mongo.Collection("evalGrades");
 Students = new Mongo.Collection("students");
+Evaluations = new Mongo.Collection("evaluations");
+
 /*
     {data: "student", title: "姓名"},
     {data: "time", title: "日期"},
