@@ -24,17 +24,23 @@ var newStudent = function(data) {
   DB.EvalScores.insert({
     name: data.name,
     studentId: studentId,
+    semester: '2014b',
+    
+    time: '',
+    norm: '作业',
+    scores: [1, 1, 0, 1],
     createdAt: createdAt,
-    class: [{
-      time: '3月',
-      listen: 5, // 倾听
-      think: 5, // 思考
-      cooperate: 5, // 合作
-      express: 5, // 表达
-      focus: 5 // 专心
-    }],
-    quiz: [],
-    homework: []
+  });
+  
+  DB.EvalScores.insert({
+    name: data.name,
+    studentId: studentId,
+    semester: '2014b',
+    
+    time: '',
+    norm: '课堂',
+    scores: [5, 4, 5, 5, 4],
+    createdAt: createdAt,
   });
 };
 

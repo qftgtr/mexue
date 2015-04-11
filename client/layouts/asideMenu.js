@@ -1,5 +1,6 @@
 var asideMenuItems = [
-  { url: '/eval',          text: '总评',   name: 'eval.summary',  template: 'EvalSummary' },
+  { url: '/eval',          text: '标准',   name: 'eval.range',    template: 'EvalRange' },
+  { url: '/eval/summary',  text: '总评',   name: 'eval.summary',  template: 'EvalSummary' },
   { url: '/eval/class',    text: '课堂',   name: 'eval.class',    template: 'EvalClass' },
   { url: '/eval/homework', text: '作业',   name: 'eval.homework', template: 'EvalHomework' },
   { url: '/eval/quiz',     text: '考试',   name: 'eval.quiz',     template: 'EvalQuiz' },

@@ -4,20 +4,23 @@ Template.StudentManager.events({
     // This function is called when the new task form is submitted
 
     var target = event.target;
+    
+    if (target.name.value) {
+      var studentId = Meteor.call('newStudent', {
+        name: target.name.value,
+        grade: target.grade.value,
+        class: target.class.value,
+        number: target.number.value,
+      });
 
-    var studentId = Meteor.call('newStudent', {
-      name: target.name.value,
-      grade: target.grade.value,
-      class: target.class.value,
-      number: target.number.value,
-    });
-    
-    // Clear form
-    target.name.value = '';
-    //target.grade.value = 3;
-    //target.class.value = 2;
-    //target.number.value = 0;
-    
+      // Clear form
+      target.name.value = '';
+      //target.grade.value = 3;
+      //target.class.value = 2;
+      var number = parseInt(target.number.value, 10);
+      if (number>0)
+        target.number.value = number+1;
+    }
     return false;
   },
   'click tr': function(event) {
@@ -54,13 +57,12 @@ Template.StudentManager.helpers({
   settings: function () {
     return {
       collection: DB.Students,
-      rowsPerPage: 10,
-      showFilter: true,
+      rowsPerPage: 40,
       fields: [
-        { key: 'name', label: '姓名' },
         { key: 'grade', label: '年级', sortable: false },
         { key: 'class', label: '班级', sortable: false, fn: function(v,o) { return v;} },
-        { key: 'number', label: '学号', sortable: false }
+        { key: 'number', label: '学号' },
+        { key: 'name', label: '姓名', sortable: false }
       ]
     };
   }

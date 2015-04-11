@@ -1,9 +1,9 @@
 <template name="StudentManager">
   <form class="new-task">
-    <input type="text" name="name" placeholder="姓名" />
     {{> GradeSelector }}
     {{> ClassSelector }}
     <input type="number" name="number" placeholder="学号" />
+    <input type="text" name="name" placeholder="姓名" />
     <input type="submit" />
   </form>
   {{> reactiveTable settings=settings }}
