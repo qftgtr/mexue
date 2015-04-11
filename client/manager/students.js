@@ -22,11 +22,11 @@ Template.StudentManager.events({
   },
   'click tr': function(event) {
     event.preventDefault();
+    // This function is called when a cell is clicked
     var post = this;
     var clickedItem = event.target; // the clicked element
     
     if (clickedItem.tagName === 'TD') { // check if already clicked
-      console.log('clicked');
       var inputDiv = document.createElement('div');
       inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '"/>';
       
@@ -34,19 +34,12 @@ Template.StudentManager.events({
       
       $('.oninput').focus().focusout(function(event) {
         var key = clickedItem.className,
-            value = event.target.value,
-            setTo = {};
-        
-        // change type to int
-        if (key === 'grade' || key === 'class' || key === 'number')
-          value = parseInt(value, 10);
-        
-        setTo[key] = value;
+            value = event.target.value;
         
         // remove input box
         event.target.parentElement && event.target.parentElement.removeChild(event.target);
         
-        //Students.update(post._id, {$set: setTo}); // update db
+        Meteor.call('updateStudent', {id: post._id, key: key, value: value})// update db
       }).keypress(function(event) {
         if (event.which === 13) event.target.blur();
       });
