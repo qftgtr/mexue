@@ -29,8 +29,7 @@ var newStudent = function(data) {
   
   // TODO: need to check for multiple request
 
-  var createdAt = new Date(),
-      g = parseInt(data.grade, 10),
+  var g = parseInt(data.grade, 10),
       c = parseInt(data.class, 10),
       n = parseInt(data.number, 10);
   
@@ -43,30 +42,26 @@ var newStudent = function(data) {
     var classId = getClassId(g, c, data.semesterAt);
     var studentId = DB.Students.insert({
       name: data.name,
-      number: data.number,
+      number: n,
       history: [{since: data.semesterAt, until: '2222b', classId: classId}],
     });
     
     DB.EvalScores.insert({
-      name: data.name,
       studentId: studentId,
       semester: '2014b',
-      
+      classId: classId,
       time: '',
       norm: '作业',
-      scores: [1, 1, 0, 1],
-      createdAt: createdAt,
+      scores: [1, 1, 0, 1]
     });
 
     DB.EvalScores.insert({
-      name: data.name,
       studentId: studentId,
       semester: '2014b',
-      
+      classId: classId,
       time: '',
       norm: '课堂',
-      scores: [5, 4, 5, 5, 4],
-      createdAt: createdAt,
+      scores: [5, 4, 5, 5, 4]
     });
   }
 };

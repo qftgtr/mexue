@@ -2,7 +2,7 @@ Template.EvalRange.helpers({
   settings: function () {
     return {
       collection: DB.EvalRange,
-      rowsPerPage: 10,
+      rowsPerPage: 20,
       showFilter: false,
       showNavigation: 'never',
       showNavigationRowsPerPage: false,
@@ -20,7 +20,7 @@ Template.EvalSummary.helpers({
   settings: function () {
     return {
       collection: DB.EvalScores,
-      rowsPerPage: 10,
+      rowsPerPage: 40,
       showFilter: true,
       fields: [
         { key: 'name', label: '姓名' },
@@ -36,8 +36,8 @@ Template.EvalSummary.helpers({
 
 var getFields = function(labels) {
   var fields = [
-    { key: 'number', label: '学号' },
-    { key: 'name', label: '姓名' }
+    { key: 'studentId', label: '学号', fn: function(v) { return DB.Students.findOne(v).number; } },
+    { key: 'studentId', label: '姓名', fn: function(v) { return DB.Students.findOne(v).name; }  }
   ];
   
   for (var i=0, len=labels.length; i<len; i++) {
@@ -67,8 +67,9 @@ var getFields = function(labels) {
 
 Template.EvalClass.helpers({
   settings: function () {
+    var classFilter = Session.get('classFilter');
     return {
-      collection: DB.EvalScores.find({norm: '课堂'}),
+      collection: DB.EvalScores.find({norm: '课堂', classId: classFilter || {$exists: true}}),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
@@ -79,8 +80,9 @@ Template.EvalClass.helpers({
 
 Template.EvalHomework.helpers({
   settings: function () {
+    var classFilter = Session.get('classFilter');
     return {
-      collection: DB.EvalScores.find({norm: '作业'}),
+      collection: DB.EvalScores.find({norm: '作业', classId: classFilter || {$exists: true}}),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
