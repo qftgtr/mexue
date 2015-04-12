@@ -57,7 +57,7 @@ var getFields = function(labels) {
     sortable: false,
     fn: function(v,o) { 
       var sum=0;
-      for (var i=v.length;i--;) sum+=v[i];
+      for (var i=v.length;i--;) sum += v[i];
       return sum;
     }
   });
@@ -72,7 +72,7 @@ Template.EvalClass.helpers({
       collection: DB.EvalScores.find({
         norm: '课堂',
         semester: Session.get('selectedSemester'),
-        classId: classFilter || {$exists: true}
+        classId: classFilter || { $exists: true }
       }),
       rowsPerPage: 40,
       showFilter: true,
@@ -89,7 +89,7 @@ Template.EvalHomework.helpers({
       collection: DB.EvalScores.find({
         norm: '作业',
         semester: Session.get('selectedSemester'),
-        classId: classFilter || {$exists: true}
+        classId: classFilter || { $exists: true }
       }),
       rowsPerPage: 40,
       showFilter: true,

@@ -46,14 +46,18 @@ var newStudent = function(data) {
       history: [{since: data.semesterAt, until: '2222b', classId: classId}],
     });
     
-    DB.EvalScores.insert({
-      studentId: studentId,
-      semester: '2014b',
-      classId: classId,
-      time: EvalDate.getMonthDate(new Date(), 'value'),
-      norm: '作业',
-      scores: [1, 1, 0, 1]
-    });
+    for (var i = 0; i < 7; i++) {
+      (function(j) {
+        DB.EvalScores.insert({
+          studentId: studentId,
+          semester: '2014b',
+          classId: classId,
+          time: EvalDate.getMonthDate(new Date(), { format: 'value', offset: j }),
+          norm: '作业',
+          scores: [1, 1, 0, 1]
+        });
+      }(i));
+    }
 
     DB.EvalScores.insert({
       studentId: studentId,
