@@ -73,7 +73,7 @@ Template.EvalClass.helpers({
       collection: DB.EvalScores.find({
         norm: '课堂',
         semester: Session.get('selectedSemester'),
-        //time: Session.get('selectedTime'),
+        time: EvalDate.getWeek(Session.get('selectedTime'), {format: 'value'}),
         classId: classFilter || { $exists: true }
       }),
       rowsPerPage: 40,

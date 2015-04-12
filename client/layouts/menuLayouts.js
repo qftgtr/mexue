@@ -19,7 +19,8 @@ var headerMenuItems = [
 Template.HeaderMenuLayout.helpers({
   item: headerMenuItems,
   currentDate: function() {
-    return Session.get('selectedTime');
+    var selectedTime = Session.get('selectedTime');
+    return EvalDate.getMonthDate(selectedTime, {format: 1}) + ',' + EvalDate.getWeek(selectedTime, {format: 1}).join('--');
   }
 });
 

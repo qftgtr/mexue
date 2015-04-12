@@ -9,6 +9,10 @@
       <option value="2015b">2016春</option>
       <option value="2016a">2016秋</option>
     </select>
+    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-1)})">上一天</button>
+    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),1)})">下一天</button>
+    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-7)})">上一周</button>
+    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),7)})">下一周</button>
   </header>
 </template>
 
