@@ -50,7 +50,7 @@ var newStudent = function(data) {
       studentId: studentId,
       semester: '2014b',
       classId: classId,
-      time: '',
+      time: EvalDate.getMonthDate(new Date(), 'value'),
       norm: '作业',
       scores: [1, 1, 0, 1]
     });
@@ -59,7 +59,7 @@ var newStudent = function(data) {
       studentId: studentId,
       semester: '2014b',
       classId: classId,
-      time: '',
+      time: EvalDate.getWeek(new Date(), {format: 'value'}),
       norm: '课堂',
       scores: [5, 4, 5, 5, 4]
     });

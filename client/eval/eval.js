@@ -69,7 +69,11 @@ Template.EvalClass.helpers({
   settings: function () {
     var classFilter = Session.get('classFilter');
     return {
-      collection: DB.EvalScores.find({norm: '课堂', classId: classFilter || {$exists: true}}),
+      collection: DB.EvalScores.find({
+        norm: '课堂',
+        semester: Session.get('selectedSemester'),
+        classId: classFilter || {$exists: true}
+      }),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
@@ -82,7 +86,11 @@ Template.EvalHomework.helpers({
   settings: function () {
     var classFilter = Session.get('classFilter');
     return {
-      collection: DB.EvalScores.find({norm: '作业', classId: classFilter || {$exists: true}}),
+      collection: DB.EvalScores.find({
+        norm: '作业',
+        semester: Session.get('selectedSemester'),
+        classId: classFilter || {$exists: true}
+      }),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
