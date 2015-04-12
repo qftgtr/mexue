@@ -1,4 +1,38 @@
 /* CSS declarations go here */
+html, body, div, header, aside {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+header {
+  width: 100%;
+  background: #fafafa;
+  height: 40px;
+  padding: 5px 0 5px 150px;
+}
+
+aside {
+  position: absolute;
+  top: 0; left: 0;
+  width: 140px;
+  height: 100%;
+  padding: 20px;
+  background: #fafaff;
+}
+
+.content {
+  margin-left: 140px;
+  margin-right: 0;
+  overflow: hidden; 
+  padding: 30px;
+}
+
 .oninput {
   position: absolute;
   top: 0; left: 0;

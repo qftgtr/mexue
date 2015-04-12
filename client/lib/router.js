@@ -1,3 +1,7 @@
+Router.configure({
+  layoutTemplate: 'PageLayout'
+});
+
 Router.route('/', function () {
   this.render('hello');
 });

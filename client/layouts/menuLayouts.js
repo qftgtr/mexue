@@ -16,7 +16,7 @@ var headerMenuItems = [
 
 
 // 设置定栏显示内容
-Template.HeaderMenuLayout.helpers({
+Template.HeaderMenu.helpers({
   item: headerMenuItems,
   currentDate: function() {
     var selectedTime = Session.get('selectedTime');
@@ -25,7 +25,7 @@ Template.HeaderMenuLayout.helpers({
 });
 
 // 设置侧栏显示内容
-Template.AsideMenuLayout.helpers({ item: asideMenuItems });
+Template.AsideMenu.helpers({ item: asideMenuItems });
 
 //Router.route('/eval/class', {name: 'eval.class'});
 //Router.route('/eval/homework', {name: 'eval.homework'});

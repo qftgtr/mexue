@@ -1,31 +1,27 @@
-<template name="HeaderMenuLayout">
+<template name="HeaderMenu">
   {{currentDate}}
-  <header>
-    {{> ClassFilter }}
-    
-    <select name="year" onchange="Session.set({selectedSemester: this.value});">
-      <option value="2014b" selected>2015春(当前)</option>
-      <option value="2015a">2015秋</option>
-      <option value="2015b">2016春</option>
-      <option value="2016a">2016秋</option>
-    </select>
-    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-1)})">上一天</button>
-    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),1)})">下一天</button>
-    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-7)})">上一周</button>
-    <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),7)})">下一周</button>
-  </header>
+  {{> ClassFilter }}
+
+  <select name="year" onchange="Session.set({selectedSemester: this.value});">
+    <option value="2014b" selected>2015春(当前)</option>
+    <option value="2015a">2015秋</option>
+    <option value="2015b">2016春</option>
+    <option value="2016a">2016秋</option>
+  </select>
+  <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-1)})">上一天</button>
+  <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),1)})">下一天</button>
+  <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-7)})">上一周</button>
+  <button onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),7)})">下一周</button>
 </template>
 
-<template name="AsideMenuLayout">
-  <aside>
-    <a href="/manage/students">学生管理</a>
-    <div>学生评价</div>
-    <ul>
-      {{#each item}}
-        {{> AsideMenuItem }}
-      {{/each}}
-    </ul>
-  </aside>
+<template name="AsideMenu">
+  <a href="/manage/students">学生管理</a>
+  <div>学生评价</div>
+  <ul>
+    {{#each item}}
+      {{> AsideMenuItem }}
+    {{/each}}
+  </ul>
 </template>
 
 <template name="AsideMenuItem">

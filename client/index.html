@@ -3,6 +3,19 @@
 </head>
 
 <body>
-  {{> HeaderMenuLayout }}
-  {{> AsideMenuLayout }}
+  {{> PageLayout }}
 </body>
+
+<template name="PageLayout">
+  <header>
+    {{> HeaderMenu }}
+  </header>
+
+  <aside>
+    {{> AsideMenu }}
+  </aside>
+
+  <div class="content">
+    {{> yield }}
+  </div>
+</template>
