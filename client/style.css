@@ -10,3 +10,12 @@ td, th {
   position: relative;
   height: 20px;
 }
+
+.eval-editable {
+  text-decoration: underline;
+}
+
+.eval-clickable:hover {
+  cursor: pointer;
+  color: red;
+}

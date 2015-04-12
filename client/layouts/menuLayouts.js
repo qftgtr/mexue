@@ -16,7 +16,12 @@ var headerMenuItems = [
 
 
 // 设置定栏显示内容
-Template.HeaderMenuLayout.helpers({ item: headerMenuItems });
+Template.HeaderMenuLayout.helpers({
+  item: headerMenuItems,
+  currentDate: function() {
+    return Session.get('selectedTime');
+  }
+});
 
 // 设置侧栏显示内容
 Template.AsideMenuLayout.helpers({ item: asideMenuItems });
@@ -33,7 +38,7 @@ for (var i = asideMenuItems.length; i--; ) {
   }(asideMenuItems[i]));
 }
 
-// get class lists from Classes DB
+// get class lists from DB.Classes
 Template.ClassFilter.helpers({
   filters: function () {
     return DB.Classes.find({}).map(function(doc) {

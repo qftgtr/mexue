@@ -83,7 +83,7 @@ var updateStudent = function(data) {
         setTo = {};
     
     // NaN, negative number ---> ''
-    setTo[data.key] = v = v>0?v:'';
+    setTo[data.key] = v>0?v:'';
 
     //DB.Students.update(data.id, {$set: setTo});
   }

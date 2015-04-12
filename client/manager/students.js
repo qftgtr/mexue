@@ -29,30 +29,8 @@ Template.StudentManager.events({
   // change the cell to an input and update the DB with the new value
   'click tr': function(event) {
     event.preventDefault();
-    
-    var post = this;
-    var clickedItem = event.target; // the clicked element
-    
-    if (clickedItem.tagName === 'TD') { // check if already clicked
-      var inputDiv = document.createElement('div');
-      inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '"/>';
-      
-      clickedItem.appendChild(inputDiv.firstChild);
-      
-      $('.oninput').focus().focusout(function(event) {
-        var key = clickedItem.className,
-            value = event.target.value;
-        
-        // remove input box
-        event.target.parentElement && event.target.parentElement.removeChild(event.target);
-        
-        Meteor.call('updateStudent', {id: post._id, key: key, value: value})// update db
-      }).keypress(function(event) {
-        if (event.which === 13) event.target.blur();
-      });
-      
-      return false;
-    }
+    clickToEdit(this, event, 'updateStudent');
+    return false;
   }
 });
 
@@ -75,8 +53,8 @@ Template.StudentManager.helpers({
       fields: [
         { key: 'history.0.since', label: '入学', sortable: false, fn: function(v) { return semesterName(v); } },
         { key: 'history.0', label: '入学班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), v.since); } },
-        { key: 'number', label: '学号' },
-        { key: 'name', label: '姓名', sortable: false },
+        { key: 'number', label: '学号', cellClass: 'editable number' },
+        { key: 'name', label: '姓名', sortable: false, cellClass: 'eval-editable name' },
         { key: 'history.0', label: '本学期班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), selectedSemester); } }
       ]
     };

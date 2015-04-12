@@ -25,7 +25,7 @@ Template.EvalSummary.helpers({
       fields: [
         { key: 'name', label: '姓名' },
         { key: 'time', label: '时间', sortable: false },
-        { key: 'grade', label: '分数', sortable: false, fn: function(v,o) { return v;} },
+        { key: 'grade', label: '分数', sortable: false, fn: function(v,o) { return v;} }
       ]
     };
   }
@@ -34,10 +34,10 @@ Template.EvalSummary.helpers({
 //var indicators = DB.EvalRange.find({norm: '作业'}, {fields: {indicator: 1, _id: 0}});
 //var indicators = DB.EvalRange.find({norm: '作业'}, {fields: {indicator: 1, _id: 0}}).fecth();
 
-var getFields = function(labels) {
+var getEvalFields = function(labels, editable) {
   var fields = [
     { key: 'studentId', label: '学号', fn: function(v) { return DB.Students.findOne(v).number; } },
-    { key: 'studentId', label: '姓名', fn: function(v) { return DB.Students.findOne(v).name; }  }
+    { key: 'studentId', label: '姓名', fn: function(v) { return DB.Students.findOne(v).name; } }
   ];
   
   for (var i=0, len=labels.length; i<len; i++) {
@@ -45,7 +45,8 @@ var getFields = function(labels) {
       fields.push({
         key: 'scores.'+i,
         label: labels[i],
-        sortable: false
+        sortable: false,
+        cellClass: 'eval-'+editable+' scores.'+i
         //fn: function(v,o) { return v[j]; }
       });
     }(i));
@@ -56,8 +57,8 @@ var getFields = function(labels) {
     label: '合计',
     sortable: false,
     fn: function(v,o) { 
-      var sum=0;
-      for (var i=v.length;i--;) sum += v[i];
+      var sum = 0;
+      for (var i = v.length; i--;) sum += v[i];
       return sum;
     }
   });
@@ -72,12 +73,13 @@ Template.EvalClass.helpers({
       collection: DB.EvalScores.find({
         norm: '课堂',
         semester: Session.get('selectedSemester'),
+        //time: Session.get('selectedTime'),
         classId: classFilter || { $exists: true }
       }),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
-      fields: getFields(indicators.class)
+      fields: getEvalFields(indicators.class, 'editable')
     };
   }
 });
@@ -89,12 +91,29 @@ Template.EvalHomework.helpers({
       collection: DB.EvalScores.find({
         norm: '作业',
         semester: Session.get('selectedSemester'),
+        time: Session.get('selectedTime'),
         classId: classFilter || { $exists: true }
       }),
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
-      fields: getFields(indicators.hw)
+      fields: getEvalFields(indicators.hw, 'clickable')
     };
+  }
+});
+
+Template.EvalClass.events({
+  'click tr': function(event) {
+    event.preventDefault();
+    clickToEdit(this, event, 'updateEval');
+    return false;
+  }
+});
+
+Template.EvalHomework.events({
+  'click tr': function(event) {
+    event.preventDefault();
+    clickToEdit(this, event, 'updateEval');
+    return false;
   }
 });
