@@ -1,7 +1,8 @@
 Template.StudentManager.events({
+  // called when the new student form is submitted
+  // insert a student
   'submit .new-task': function (event) {
     event.preventDefault();
-    // This function is called when the new task form is submitted
 
     var target = event.target;
     
@@ -11,21 +12,24 @@ Template.StudentManager.events({
         grade: target.grade.value,
         class: target.class.value,
         number: target.number.value,
+        semesterAt: Session.get('selectedSemester')
       });
-
+      
       // Clear form
       target.name.value = '';
       //target.grade.value = 3;
       //target.class.value = 2;
       var number = parseInt(target.number.value, 10);
       if (number>0)
-        target.number.value = number+1;
+        target.number.value = number + 1;
     }
     return false;
   },
+  // called when a cell is clicked
+  // change the cell to an input and update the DB with the new value
   'click tr': function(event) {
     event.preventDefault();
-    // This function is called when a cell is clicked
+    
     var post = this;
     var clickedItem = event.target; // the clicked element
     
@@ -55,14 +59,25 @@ Template.StudentManager.events({
 
 Template.StudentManager.helpers({
   settings: function () {
+    var classFilter = Session.get('classFilter'),
+        selectedSemester = Session.get('selectedSemester');
     return {
-      collection: DB.Students,
+      collection: DB.Students.find(classFilter?{
+        history: {
+          $elemMatch: {
+            classId: classFilter,
+            since: {$lte: selectedSemester},
+            until: {$gte: selectedSemester}
+          }
+        }
+      }:{}),
       rowsPerPage: 40,
       fields: [
-        { key: 'grade', label: '年级', sortable: false },
-        { key: 'class', label: '班级', sortable: false, fn: function(v,o) { return v;} },
+        { key: 'history.0.since', label: '入学', sortable: false, fn: function(v) { return semesterName(v); } },
+        { key: 'history.0', label: '入学班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), v.since); } },
         { key: 'number', label: '学号' },
-        { key: 'name', label: '姓名', sortable: false }
+        { key: 'name', label: '姓名', sortable: false },
+        { key: 'history.0', label: '本学期班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), selectedSemester); } }
       ]
     };
   }

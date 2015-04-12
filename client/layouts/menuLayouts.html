@@ -1,0 +1,45 @@
+<template name="HeaderMenuLayout">
+  <header>
+    {{> ClassFilter }}
+    
+    <select name="year" onchange="Session.set({selectedSemester: this.value});">
+      <option value="2014b" selected>2015春(当前)</option>
+      <option value="2015a">2015秋</option>
+      <option value="2015b">2016春</option>
+      <option value="2016a">2016秋</option>
+    </select>
+  </header>
+</template>
+
+<template name="AsideMenuLayout">
+  <aside>
+    <a href="/manage/students">学生管理</a>
+    <div>学生评价</div>
+    <ul>
+      {{#each item}}
+        {{> AsideMenuItem }}
+      {{/each}}
+    </ul>
+  </aside>
+</template>
+
+<template name="AsideMenuItem">
+  <li><a href="{{url}}">{{text}}</a></li>
+</template>
+
+<template name="HeaderMenuItem">
+  <li><a href="{{url}}">{{text}}</a></li>
+</template>
+
+<template name="ClassFilter">
+  <select name="classFilter" onchange="Session.set({classFilter: this.value});">
+    <option value=''>全部</option>
+    {{#each filters}}
+      {{> ClassFilterItem }}
+    {{/each}}
+  </select>
+</template>
+
+<template name="ClassFilterItem">
+  <option value="{{_id}}">{{name}}</option>
+</template>

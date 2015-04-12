@@ -32,3 +32,12 @@ for (var i = asideMenuItems.length; i--; ) {
     Router.route(item.url, {name: item.name});
   }(asideMenuItems[i]));
 }
+
+// get class lists from Classes DB
+Template.ClassFilter.helpers({
+  filters: function () {
+    return DB.Classes.find({}).map(function(doc) {
+      return { _id: doc._id, name: className(doc) };
+    });
+  }
+});
