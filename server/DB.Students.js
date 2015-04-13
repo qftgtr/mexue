@@ -72,7 +72,7 @@ var newStudent = function(data) {
           classId: classId,
           time: EvalDate.getWeek(new Date(), {format: 'value', offset: 7*j}),
           norm: '课堂',
-          pingyu: '评语',
+          teacherComment: '',
           scores: [
             Math.floor(Math.random()*5),
             Math.floor(Math.random()*5),

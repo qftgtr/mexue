@@ -36,8 +36,17 @@ Template.EvalSummary.helpers({
 
 var getEvalFields = function(labels, editable) {
   var fields = [
-    { key: 'studentId', label: '学号', fn: function(v) { return DB.Students.findOne(v).number; } },
-    { key: 'studentId', label: '姓名', fn: function(v) { return DB.Students.findOne(v).name; } }
+    {
+      key: 'studentId',
+      label: '学号',
+      cellClass: 'col-md-1 col-sm-1',
+      fn: function(v) { return DB.Students.findOne(v).number; }
+    }, {
+      key: 'studentId',
+      label: '姓名',
+      cellClass: 'col-md-1 col-sm-2',
+      fn: function(v) { return DB.Students.findOne(v).name; }
+    }
   ];
   
   for (var i=0, len=labels.length; i<len; i++) {
@@ -46,7 +55,7 @@ var getEvalFields = function(labels, editable) {
         key: 'scores.'+i,
         label: labels[i],
         sortable: false,
-        cellClass: 'eval-'+editable+' scores.'+i
+        cellClass: 'eval-'+editable+' scores-'+i + ' col-md-1 col-sm-1'
         //fn: function(v,o) { return v[j]; }
       });
     }(i));
@@ -56,6 +65,7 @@ var getEvalFields = function(labels, editable) {
     key: 'scores',
     label: '合计',
     sortable: false,
+    cellClass: 'col-md-1 col-sm-1',
     fn: function(v,o) { 
       var sum = 0;
       for (var i = v.length; i--;) sum += v[i];
@@ -64,10 +74,10 @@ var getEvalFields = function(labels, editable) {
   });
   
   fields.push({
-    key: 'pingyu',
+    key: 'teacherComment',
     label: '评语',
     sortable: false,
-    cellClass: 'eval-'+editable+' pingyu'
+    cellClass: 'eval-editable teacherComment'
   });
   
   return fields;

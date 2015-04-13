@@ -1,0 +1,35 @@
+/* CSS declarations go here */
+
+.oninput {
+  position: absolute;
+  top: 3px; bottom: 3px;
+  left: 0;
+  width: 90%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+textarea.oninput {
+  width: 100%;
+  resize: none;
+}
+
+td, th {
+  position: relative !important;
+}
+
+.eval-editable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
+.eval-clickable:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.teacherComment:empty:before {
+  content: '点击添加评语';
+  color: #aaa;
+}

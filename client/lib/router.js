@@ -2,9 +2,7 @@ Router.configure({
   layoutTemplate: 'PageLayout'
 });
 
-Router.route('/', function () {
-  this.render('hello');
-});
+Router.route('/', function () {});
 
 Router.route('/about');
 Router.route('/manage/students', function() {

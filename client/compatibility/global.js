@@ -8,7 +8,10 @@ var clickToEdit = function(post, event, db) {
 
   if (editable === 'eval-editable' && clickedItem.tagName === 'TD') { // check if already clicked
     var inputDiv = document.createElement('div');
-    inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '"/>';
+    if (key === 'teacherComment')
+      inputDiv.innerHTML = '<textarea class="oninput">' + clickedItem.innerHTML + '</textarea>';
+    else
+      inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '">';
 
     clickedItem.appendChild(inputDiv.firstChild);
     
