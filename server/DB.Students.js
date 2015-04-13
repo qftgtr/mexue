@@ -46,7 +46,7 @@ var newStudent = function(data) {
       history: [{since: data.semesterAt, until: '2222b', classId: classId}],
     });
     
-    for (var i = 0; i < 7; i++) {
+    for (var i = -7; i < 7; i++) {
       (function(j) {
         DB.EvalScores.insert({
           studentId: studentId,
@@ -54,19 +54,35 @@ var newStudent = function(data) {
           classId: classId,
           time: EvalDate.getMonthDate(new Date(), { format: 'value', offset: j }),
           norm: '作业',
-          scores: [1, 1, 0, 1]
+          scores: [
+            Math.floor(Math.random()*2), 
+            Math.floor(Math.random()*2), 
+            Math.floor(Math.random()*2), 
+            Math.floor(Math.random()*2)
+          ]
         });
       }(i));
     }
 
-    DB.EvalScores.insert({
-      studentId: studentId,
-      semester: '2014b',
-      classId: classId,
-      time: EvalDate.getWeek(new Date(), {format: 'value'}),
-      norm: '课堂',
-      scores: [5, 4, 5, 5, 4]
-    });
+    for (var i = -2; i < 2; i++) {
+      (function(j) {
+        DB.EvalScores.insert({
+          studentId: studentId,
+          semester: '2014b',
+          classId: classId,
+          time: EvalDate.getWeek(new Date(), {format: 'value', offset: 7*j}),
+          norm: '课堂',
+          pingyu: '评语',
+          scores: [
+            Math.floor(Math.random()*5),
+            Math.floor(Math.random()*5),
+            Math.floor(Math.random()*5),
+            Math.floor(Math.random()*5),
+            Math.floor(Math.random()*5)
+          ]
+        });
+      }(i));
+    }
   }
 };
 

@@ -11,8 +11,8 @@ var clickToEdit = function(post, event, db) {
     inputDiv.innerHTML = '<input class="oninput" type="text" value="' + clickedItem.innerHTML + '"/>';
 
     clickedItem.appendChild(inputDiv.firstChild);
-
-    $('.oninput').focus().focusout(function(event) {
+    
+    $('.oninput').focus().select().focusout(function(event) {
       var value = event.target.value;
 
       // remove input box
