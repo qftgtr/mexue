@@ -83,6 +83,18 @@ var newStudent = function(data) {
         });
       }(i));
     }
+    
+    DB.EvalScores.insert({
+      studentId: studentId,
+      semester: '2014b',
+      classId: classId,
+      norm: '测验',
+      scores: [
+        Math.floor(Math.random()*70+30),
+        Math.floor(Math.random()*70+30),
+        Math.floor(Math.random()*70+30)
+      ]
+    });
   }
 };
 

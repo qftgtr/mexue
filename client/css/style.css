@@ -33,3 +33,8 @@ td, th {
   content: '点击添加评语';
   color: #aaa;
 }
+
+tbody {
+  height: 600px;
+  overflow-y: auto;
+}

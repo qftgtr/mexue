@@ -1,0 +1,102 @@
+var DPCalendar = {
+    curYear: 0,
+    curMonth: 0,
+    options: {},
+
+    init: function(options){
+        $.extend(this.options, options);
+        var now = new Date();
+        this.curYear = now.getFullYear()
+        this.curMonth = now.getMonth();
+        this.setMongth(this.curYear, this.curMonth);
+        $(".datepicker_next").unbind().bind("click", function(){
+            DPCalendar.curMonth++;
+            if(DPCalendar.curMonth == 12){
+                DPCalendar.curMonth = 0;
+                DPCalendar.curYear++;
+            }
+            DPCalendar.setMongth(DPCalendar.curYear, DPCalendar.curMonth);
+        });
+        $(".datepicker_pre").unbind().bind("click", function(){
+            DPCalendar.curMonth--;
+            if(DPCalendar.curMonth == -1){
+                DPCalendar.curMonth = 11;
+                DPCalendar.curYear--;
+            }
+            DPCalendar.setMongth(DPCalendar.curYear, DPCalendar.curMonth);
+        });
+    },
+
+    setMongth: function(year, month){
+        var days = 31;
+        if(month == 3 || month == 5 || month == 8 || month == 10){
+            days = 30;
+        }
+        //判断二月份
+        if(month == 1){
+            if(year % 4 == 0){
+                days = 29;
+            }else{
+                days = 28;
+            }
+        }
+        $(".datepicker_cal").find("tr:not(.datepicker_hd)").remove();
+        var now = new Date();
+        var rowHtml = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+        var row = $(rowHtml).appendTo($(".datepicker_cal"));
+        for(var date = 1; date <= days; date++){
+            var d = new Date(year, month, date);
+            var weekday = d.getDay();
+            if(weekday == 0){
+                weekday = 7;
+            }
+            var td = row.children("td:eq("+(weekday - 1)+")");
+            var cell = $("<div class='datepicker_cell'>" + d.getDate() + "</div>").appendTo(td);
+            if(weekday == 7){
+                //到了星期日，重启一行
+                row = $(rowHtml).appendTo($(".datepicker_cal"));
+            }
+            var monthDevider = "-";
+            if(month < 9){
+                monthDevider = "-0";
+            }
+            var dayDevider = "-";
+            if(d.getDate() <= 9){
+                dayDevider = "-0";
+            }
+            cell.attr("date", year + monthDevider + (month + 1) + dayDevider + d.getDate());
+            cell.bind("click", function(){
+                if(DPCalendar.options.onSelected){
+                    var date = $(this).attr("date");
+                    DPCalendar.options.onSelected(date);
+                }
+            });
+        }
+        $(".datepicker_cal_lbl").text(year + "年" + (month + 1) + "月");
+    }
+
+};
+$.fn.datepicker = function(){
+    $(this).unbind("keydown.picker").bind("keydown.picker", function(e){
+        e.preventDefault();
+        return false;
+    });
+    $(this).unbind("click.picker").bind("click.picker", function(){
+        var cal = $("#datepicker_box");
+        var target = $(this);
+        if(cal.length == 0){
+            cal = $("<div id='datepicker_box'></div>").appendTo("body");
+            cal.append('<div class="datepicker_month"><span class="datepicker_cal_pager datepicker_pre"></span><span class="datepicker_cal_lbl"></span><span class="datepicker_cal_pager datepicker_next"></span></div>');
+            cal.append('<table class="datepicker_cal"><tr class="datepicker_hd"><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td><td>日</td></tr></table>');
+            DPCalendar.init();
+        }
+        cal.popMenu({
+            target: target,
+            closeAfterClick: false
+        });
+        DPCalendar.options.onSelected = function(date){
+            target.val(date);
+            $("#datepicker_box").popMenu("close");
+        };
+    });
+};
