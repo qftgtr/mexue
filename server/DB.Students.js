@@ -74,9 +74,9 @@ var newStudent = function(data) {
       classId: classId,
       norm: '测验',
       scores: [
-        Math.floor(Math.random()*70+30),
-        Math.floor(Math.random()*70+30),
-        Math.floor(Math.random()*70+30)
+        Math.floor(Math.random()*30+70),
+        Math.floor(Math.random()*30+70),
+        Math.floor(Math.random()*30+70)
       ]
     });
   }
@@ -87,17 +87,17 @@ var newStudent = function(data) {
 var updateStudent = function(data) {
   console.log('UPDATE client:'+Meteor.isClient+',server:'+Meteor.isServer);
   // change type to int
-  if (data.key === 'name')
-    DB.Students.update(data.id, {$set: {'name': data.value}});
+  //if (data.key === 'name')
+    //DB.Students.update(data.id, {$set: {'name': data.value}});
   
-  if (data.key === 'grade' || data.key === 'class' || data.key === 'number') {
+  if (data.key === 'number') {
     var v = parseInt(data.value, 10),
         setTo = {};
     
     // NaN, negative number ---> ''
     setTo[data.key] = v>0?v:'';
 
-    //DB.Students.update(data.id, {$set: setTo});
+    DB.Students.update(data.id, {$set: setTo});
   }
 };
 

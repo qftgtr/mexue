@@ -70,7 +70,7 @@ mobileAPI = {
           var toNumber = { '一': 1, '二': 2, '三': 3, 
                            '四': 4, '五': 5, '六': 6 };
           DBmethods.upsertClass(classId, toNumber[t[0]], 
-                                parseInt(t[1],10), '2014b');
+                                parseInt(t[1],10), EvalDate.getSemester());
         }
       });
     };

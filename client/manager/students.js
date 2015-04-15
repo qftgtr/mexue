@@ -53,7 +53,7 @@ Template.StudentManager.helpers({
       fields: [
         { key: 'history.0.since', label: '入学', sortable: false, fn: function(v) { return semesterName(v); } },
         { key: 'history.0', label: '入学班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), v.since); } },
-        { key: 'number', label: '学号', cellClass: 'editable number' },
+        { key: 'number', label: '学号', cellClass: 'eval-editable number' },
         { key: 'name', label: '姓名', sortable: false, cellClass: 'eval-editable name' },
         { key: 'history.0', label: '本学期班级', sortable: false, fn: function(v) { return className(DB.Classes.findOne(v.classId), selectedSemester); } }
       ]
