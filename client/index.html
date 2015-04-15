@@ -21,54 +21,8 @@
 </head>
 
 <body>
-  {{ currentUser }}
-  {{> UserLogin }}
-  {{#if currentUser}}{{> PageLayout }}{{/if}}
+  {{#if currentUser}}
+  {{else}}
+    {{> UserLogin }}
+  {{/if}}
 </body>
-
-<template name="UserLogin">
-  <form class="user-login">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="text" name="namespace" placeholder="namespace">
-    <textarea name="query" placeholder="query"></textarea>
-    <input type="submit">
-  </form>
-  
-  {{> reactiveTable settings=settings }}
-</template>
-
-<template name="PageLayout">
-  {{> HeaderMenu }}
-
-  <div class="container-fluid">
-    <div class="row">
-      {{> AsideMenu }}
-      
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <form class="form-inline">
-  {{> ClassFilter }}
-
-  <select name="year" class='form-control' onchange="Session.set({selectedSemester: this.value});">
-    <option value="2014b" selected>2015春(当前)</option>
-    <option value="2015a">2015秋</option>
-    <option value="2015b">2016春</option>
-    <option value="2016a">2016秋</option>
-  </select>
-
-  {{currentDate}}
-  <div class="btn-group" role="group" aria-label="date-btns">
-    <input type="button" class="btn btn-default" onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-1)})" value="上一天">
-    <input type="button" class="btn btn-default" onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),1)})" value="下一天">
-    <input type="button" class="btn btn-default" onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),-7)})" value="上一周">
-    <input type="button" class="btn btn-default" onclick="Session.set({'selectedTime': EvalDate.offsetDay(Session.get('selectedTime'),7)})" value="下一周">
-  </div>
-</form>
-        <!--h1 class="page-header">Dashboard</h1-->
-        <div>
-          {{> yield }}
-        </div>
-      </div>
-    </div>
-  </div>
-</template>

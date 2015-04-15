@@ -1,12 +1,6 @@
-Accounts.validateLoginAttempt(function(attempt) {
-  console.log(attempt);
-  //if (Meteor.users.findOne({username: username}))
-  
-  //var user = mobileAPI.new(data.username, data.password);
-  //if (user)
-  //return true;
-  //mobileAPI.login();
-});
+//Accounts.validateLoginAttempt(function(attempt) {
+//  console.log(attempt);
+//});
 
 var userLogin = function(data) {
   var user = mobileAPI.new();
