@@ -11,7 +11,35 @@ var upsertClass = function(_id, g, c, semester) {
   }
 };
 
+//var initEval = function(studentId, classId) {
+//  var time = '',
+//      semester = EvalDate.getSemester();
+//  DB.EvalRange.find({}).forEach(function(e) {
+//    var scores = e.scores;
+//    DB.EvalScores.insert({
+//      studentId: studentId,
+//      semester: semester,
+//      classId: classId,
+//      time: time,
+//      norm: e.norm,
+//      scores: scores
+//    });
+//  });
+//};
 
+var initEval = function(studentId, classId) {
+  DB.EvalScores.insert({
+    studentId: studentId,
+    semester: EvalDate.getSemester(),
+    classId: classId,
+    norm: '测验',
+    scores: [
+      Math.floor(Math.random()*70+30),
+      Math.floor(Math.random()*70+30),
+      Math.floor(Math.random()*70+30)
+    ]
+  });
+};
 
 var upsertStudent = function(_id, name, classId, number) {
   if (DB.Students.findOne(_id)) {
