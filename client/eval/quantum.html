@@ -1,0 +1,13 @@
+<template name="EvalQuantum">
+  <h2 class="sub-header">综合素质评价</h2>
+  <div class="col-md-3 col-sm-3">
+    {{> reactiveTable settings=settings }}
+  </div>
+  <div class="col-md-9 col-sm-9">
+    {{> QuantumField}}
+  </div>
+</template>
+
+<template name="QuantumField">
+    {{> reactiveTable settings=settings }}
+</template>

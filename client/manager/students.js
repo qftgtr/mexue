@@ -34,7 +34,6 @@ Template.StudentManager.events({
   }
 });
 
-
 Template.StudentManager.helpers({
   settings: function () {
     var classFilter = Session.get('classFilter'),

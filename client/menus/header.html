@@ -29,16 +29,3 @@
 <template name="HeaderMenuItem">
   <li><a href="{{url}}">{{text}}</a></li>
 </template>
-
-<template name="ClassFilter">
-  <select name="classFilter" class='form-control' onchange="Session.set({classFilter: this.value});">
-    <option value=''>全部</option>
-    {{#each filters}}
-      {{> ClassFilterItem }}
-    {{/each}}
-  </select>
-</template>
-
-<template name="ClassFilterItem">
-  <option value="{{_id}}">{{name}}</option>
-</template>

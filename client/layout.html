@@ -7,7 +7,7 @@
       {{> AsideMenu }}
       
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <form class="form-inline">
+<form class="form-inline">
   {{> ClassFilter }}
 
   <select name="year" class='form-control' onchange="Session.set({selectedSemester: this.value});">
@@ -32,4 +32,18 @@
     </div>
   </div>
 {{/if}}
+</template>
+
+
+<template name="ClassFilter">
+  <select name="classFilter" class='form-control class-filter' onchange="Session.set({classFilter: this.value});">
+    <!--option value=''>全部</option-->
+    {{#each filters}}
+      {{> ClassFilterItem }}
+    {{/each}}
+  </select>
+</template>
+
+<template name="ClassFilterItem">
+  <option value="{{_id}}">{{name}}</option>
 </template>

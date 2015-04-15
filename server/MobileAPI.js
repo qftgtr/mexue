@@ -19,6 +19,7 @@ mobileAPI = {
           device: 'ios'
         }});
       } catch (error) {
+        console.error(error);
         return false;
       }
       

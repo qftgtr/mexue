@@ -20,8 +20,13 @@ var clickToEdit = function(post, event, db) {
 
       // remove input box
       event.target.parentElement && event.target.parentElement.removeChild(event.target);
-
-      Meteor.call(db, {id: post._id, key: key, value: value})// update db
+      
+      // update db
+      if (db === 'updateQuantum') {
+        Meteor.call(db, {id: post._id, index: post.index, value: value});
+      } else {
+        Meteor.call(db, {id: post._id, key: key, value: value});
+      }
     }).keypress(function(event) {
       if (event.which === 13) event.target.blur();
     });
@@ -32,3 +37,61 @@ var clickToEdit = function(post, event, db) {
     Meteor.call(db, {id: post._id, key: key, value: 1-value})// update db
   }
 };
+
+var getEvalFields = function(labels, editable, options) {
+  var fields = [
+    {
+      key: 'studentId',
+      label: '学号',
+      headerClass: 'col-md-1 col-sm-2',
+      cellClass: 'col-md-1 col-sm-1',
+      fn: function(v) { return DB.Students.findOne(v).number; }
+    }, {
+      key: 'studentId',
+      label: '姓名',
+      headerClass: 'col-md-1 col-sm-2',
+      cellClass: 'col-md-1 col-sm-2',
+      fn: function(v) { return DB.Students.findOne(v).name; }
+    }
+  ];
+  
+  for (var i=0, len=labels.length; i<len; i++) {
+    (function(j){
+      fields.push({
+        key: 'scores.'+i+'.score',
+        label: labels[i],
+        sortable: false,
+        headerClass: 'scores-'+i + ' col-md-1 col-sm-1',
+        cellClass: (labels[i]?'eval-'+editable:'')+' scores-'+i + ' col-md-1 col-sm-1'
+        //fn: function(v,o) { return v[j]; }
+      });
+    }(i));
+  }
+
+  if (!(options && options.noSum)) {
+    fields.push({
+      key: 'scores',
+      label: '合计',
+      sortable: false,
+      headerClass: 'col-md-1 col-sm-1',
+      cellClass: 'col-md-1 col-sm-1',
+      fn: function(v,o) { 
+        var sum = 0;
+        for (var i = v.length; i--;) sum += v[i].score;
+        return sum;
+      }
+    });
+  }
+  
+  if (!(options && options.noComment)) {
+    fields.push({
+      key: 'teacherComment',
+      label: '评语',
+      sortable: false,
+      headerClass: 'teacherComment',
+      cellClass: 'eval-editable teacherComment'
+    });
+  }
+  
+  return fields;
+}

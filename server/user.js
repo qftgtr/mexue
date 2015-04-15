@@ -4,9 +4,12 @@
 
 var userLogin = function(data) {
   var user = mobileAPI.new();
+  
+  console.log('Logging in with: '+JSON.stringify(data));
   success = user.login(data.username, data.password);
   
   if (success) {
+    console.log('Success!');
     var account = Meteor.users.findOne({username: data.username});
 
     if (account) {
@@ -24,6 +27,7 @@ var userLogin = function(data) {
     return true;
   }
   
+  console.log('Fail!');
   return false;
   //return true;
 };
