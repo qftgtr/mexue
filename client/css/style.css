@@ -18,13 +18,9 @@ td, th {
   position: relative !important;
 }
 
-.eval-editable:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-
-.eval-clickable:hover {
+.eval-editable:hover, 
+.eval-clickable:hover, 
+.select-student:hover {
   cursor: pointer;
   text-decoration: underline;
 }

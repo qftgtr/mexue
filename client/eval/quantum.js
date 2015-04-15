@@ -1,4 +1,5 @@
 Template.EvalQuantum.helpers({
+  selectedStudent: function() {return DB.Students.findOne(Session.get('selectedStudent')).name; },
   settings: function () {
     var classFilter = Session.get('classFilter');
     return {
@@ -11,6 +12,7 @@ Template.EvalQuantum.helpers({
       rowsPerPage: 40,
       showFilter: false,
       showNavigationRowsPerPage: false,
+      rowClass: 'select-student',
       fields: [
         {
           key: 'studentId',
@@ -33,12 +35,14 @@ Template.EvalQuantum.helpers({
 Template.QuantumField.helpers({
   settings: function () {
     var classFilter = Session.get('classFilter');
+    var evalSheet = DB.EvalScores.findOne({
+      studentId: Session.get('selectedStudent'),
+      evalName: '综合素质评价',
+      semester: Session.get('selectedSemester'),
+      classId: classFilter || { $exists: true }
+    });
     return {
-      collection: DB.EvalScores.findOne({
-        evalName: '综合素质评价',
-        semester: Session.get('selectedSemester'),
-        classId: classFilter || { $exists: true }
-      }).scores,
+      collection: evalSheet?evalSheet.scores:[],
       class: 'table table-striped table-hover table-condensed reactive-table',
       rowsPerPage: 24,
       showFilter: false,
@@ -65,6 +69,14 @@ Template.QuantumField.helpers({
         }
       ]
     };
+  }
+});
+
+Template.EvalQuantum.events({
+  'click tr': function(event) {
+    event.preventDefault();
+    Session.set({selectedStudent: this.studentId});
+    return false;
   }
 });
 
