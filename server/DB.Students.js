@@ -1,21 +1,5 @@
 // Student DB operations
 
-// search class of grade g and class c at semester semesterAt
-// return class id
-// create a class if not exists
-var getClassId = function(g, c, semesterAt) {
-  var enrollIn = parseInt(semesterAt, 10) - g + 1;
-  var selectClass = DB.Classes.findOne({enrollIn: enrollIn, class: c});
-  if (selectClass) {
-    return selectClass._id;
-  } else {
-    return DB.Classes.insert({
-      enrollIn: enrollIn,
-      class: c
-    });
-  }
-}
-
 // insert a student to the Students DB
 // into class of data.grade, data.class at selectedSemester
 // create a class if not exists
@@ -39,7 +23,7 @@ var newStudent = function(data) {
   n = n>0?n:'';
   
   if (g && c) {
-    var classId = getClassId(g, c, data.semesterAt);
+    var classId = DBmethods.upsertClass(g, c, data.semesterAt);
     var studentId = DB.Students.insert({
       name: data.name,
       number: n,

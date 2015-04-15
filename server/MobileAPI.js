@@ -51,7 +51,7 @@ mobileAPI = {
       accountId = aid;
       Accounts.setPassword(aid, password);
     };
-
+    
     var getUserInfo = function() {
       HTTP.post(url+'userInfo', {params: {
         m: 'getUserInfo',
@@ -59,9 +59,44 @@ mobileAPI = {
         token: token
       }}, function(error, result) {
         Meteor.users.update(accountId, {$set: {'profile.userInfo': result.data.userInfo}});
+        classes = result.data.userInfo;
+        console.log(classes);
+        for (var i = classes.length; i--; ) {
+          var classId = classes[i].classId,
+              name = classes[i].className;
+          
+          var t = name.split('年级');
+          
+          var toNumber = { '一': 1, '二': 2, '三': 3, 
+                           '四': 4, '五': 5, '六': 6 };
+          DBmethods.upsertClass(classId, toNumber[t[0]], 
+                                parseInt(t[1],10), '2014b');
+        }
       });
     };
-
+    
+    var getContacts = function() {
+      if (userType === 'teacher') {
+        HTTP.post(url+'communication', {params: {
+          m: 'getMyClassesandGroup',
+          type: 'teacher',
+          userId: userId,
+          token: token
+        }}, function(error, result) {
+          var school = result.data.School[0];
+          //console.log(school.SchoolName);
+          var classes = school.list;
+          for (var i = classes.length; i--; ) {
+            var contact = classes[i].contact;
+            for (var j = contact.length; j--; ) {
+              if (contact[j].type === 'parent')
+                console.log(contact[j]);
+            }
+          }
+        });
+      }
+    };
+    
     var post = function(namespace, post_data) {
       var query = namespace+'?'+post_data;
       
@@ -73,7 +108,7 @@ mobileAPI = {
           return: result.content
         });
       };
-
+      
       post_data = post_data + '&userId=' + userId + '&token=' + token;
       console.log(post_data);
       HTTP.post(url+namespace, {query: post_data}, callback);
@@ -84,6 +119,7 @@ mobileAPI = {
       createUser: createUser,
       changePassword: changePassword,
       getUserInfo: getUserInfo,
+      getContacts: getContacts,
       post: post
     };
   }

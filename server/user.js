@@ -5,7 +5,6 @@
 var userLogin = function(data) {
   var user = mobileAPI.new();
   success = user.login(data.username, data.password);
-  console.log(success);
   
   if (success) {
     var account = Meteor.users.findOne({username: data.username});
@@ -15,8 +14,13 @@ var userLogin = function(data) {
     } else {
       user.createUser(); 
     }
-
-    user.getUserInfo();
+    
+    Meteor.setTimeout(function() { user.getUserInfo(); }, 100);
+    Meteor.setTimeout(function() { user.getContacts(); }, 100);
+    
+    console.log(data);
+    //user.post(data.namespace, data.query);
+    
     return true;
   }
   

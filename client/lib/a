@@ -1,4 +1,8 @@
-{{> loginButtons }}
+m=publish&content=abcdefg&tagIds&classId=55276d6845ce226af8deb7b3
+m=pageByClassIds&classIds=55276d6845ce226af8deb7b3&pageNum=1&pageSize=20
+m=pageByClassIds&classIds=(55276d6845ce226af8deb7b3)&pageNum=1&pageSize=20
+m=getMyClassesandGroup&type=teacher
+
 
 var DPCalendar = {
     curYear: 0,
