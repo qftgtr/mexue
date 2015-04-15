@@ -21,7 +21,8 @@
 </head>
 
 <body>
-  {{> loginButtons }}
+  {{ currentUser }}
+  {{> UserLogin }}
   {{#if currentUser}}{{> PageLayout }}{{/if}}
 </body>
 

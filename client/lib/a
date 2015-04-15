@@ -1,3 +1,5 @@
+{{> loginButtons }}
+
 var DPCalendar = {
     curYear: 0,
     curMonth: 0,

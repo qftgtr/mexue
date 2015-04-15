@@ -21,21 +21,29 @@ var routeTo = function(url, to) {
 //Router.route('/eval/homeworks', function() { this.render('EvalHomeworks') });
 //Router.route('/eval/projects', function() { this.render('EvalProjects') });
 
-Accounts.ui.config({
-  passwordSignupFields: "USERNAME_ONLY"
-});
-
-Accounts.config({forbidClientAccountCreation: true});
+//Accounts.ui.config({
+//  passwordSignupFields: "USERNAME_ONLY"
+//});
+//
+//Accounts.config({forbidClientAccountCreation: true});
 
 Template.UserLogin.events({
   'submit .user-login': function(event) {
     event.preventDefault();
-    var success = Meteor.call('userLogin', {
-      username: event.target.username.value,
-      password: event.target.password.value,
-      namespace: event.target.namespace.value,
-      query: event.target.query.value
+    var username = event.target.username.value,
+        password = event.target.password.value;
+    
+    Meteor.call('userLogin', {
+      username: username,
+      password: password
+      //namespace: event.target.namespace.value,
+      //query: event.target.query.value
+    }, function(error, result) {
+      console.log(result);
+      if (result)
+        Meteor.loginWithPassword(username, password);
     });
+    
     return false;
   }
 });
