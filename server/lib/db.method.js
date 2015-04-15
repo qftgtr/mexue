@@ -1,6 +1,3 @@
-// search class of grade g and class c at semester semesterAt
-// return class id
-// create a class if not exists
 var upsertClass = function(_id, g, c, semesterAt) {
   if (DB.Classes.findOne(_id)) {
     return _id;
@@ -14,6 +11,24 @@ var upsertClass = function(_id, g, c, semesterAt) {
   }
 }
 
+var upsertStudent = function(_id, name, classId, number) {
+  if (DB.Students.findOne(_id)) {
+    return _id;
+  } else {
+    DB.Students.insert({
+      _id: _id,
+      name: name,
+      number: number || '',
+      history: [{
+        classId: classId,
+        since: '2014b',
+        until: '2222b'
+      }]
+    });
+  }
+};
+
 DBmethods = {
-  upsertClass: upsertClass
+  upsertClass: upsertClass,
+  upsertStudent: upsertStudent
 };

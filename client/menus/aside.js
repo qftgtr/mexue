@@ -9,7 +9,10 @@ var asideMenuItems = [
 
 // 设置侧栏显示内容
 Template.AsideMenu.helpers({
-  item: asideMenuItems
+  item: asideMenuItems,
+  userIs: function(type) {
+    return Meteor.user().profile.userType === 'teacher';
+  }
 });
 
 //Router.route('/eval/class', {name: 'eval.class'});

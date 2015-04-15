@@ -41,7 +41,7 @@ mobileAPI = {
         profile: {
           userId: userId,
           name: realName,
-          userTyep: userType
+          userType: userType
         }
       });
       return accountId;
@@ -60,7 +60,7 @@ mobileAPI = {
       }}, function(error, result) {
         Meteor.users.update(accountId, {$set: {'profile.userInfo': result.data.userInfo}});
         classes = result.data.userInfo;
-        console.log(classes);
+        // console.log(classes);
         for (var i = classes.length; i--; ) {
           var classId = classes[i].classId,
               name = classes[i].className;
@@ -89,8 +89,13 @@ mobileAPI = {
           for (var i = classes.length; i--; ) {
             var contact = classes[i].contact;
             for (var j = contact.length; j--; ) {
-              if (contact[j].type === 'parent')
-                console.log(contact[j]);
+              if (contact[j].type === 'parent') {
+                var s = contact[j];
+                
+                //console.log(s);
+                //console.log(classes[i]);
+                DBmethods.upsertStudent(s.id, s.name, classes[i].id);
+              }
             }
           }
         });

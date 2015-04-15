@@ -50,18 +50,18 @@ Template.UserLogin.events({
     return false;
   }
 });
-
-Template.UserLogin.helpers({
-  settings: function () {
-    return {
-      collection: DB.Queries,
-      rowsPerPage: 20,
-      showFilter: true,
-      fields: [
-        { key: 'time', label: 'time' },
-        { key: 'query', label: 'queries', sortable: false },
-        { key: 'return', label: 'returns', sortable: false }
-      ]
-    };
-  }
-});
+//
+//Template.UserLogin.helpers({
+//  settings: function () {
+//    return {
+//      collection: DB.Queries,
+//      rowsPerPage: 20,
+//      showFilter: true,
+//      fields: [
+//        { key: 'time', label: 'time' },
+//        { key: 'query', label: 'queries', sortable: false },
+//        { key: 'return', label: 'returns', sortable: false }
+//      ]
+//    };
+//  }
+//});

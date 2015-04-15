@@ -18,7 +18,7 @@ var userLogin = function(data) {
     Meteor.setTimeout(function() { user.getUserInfo(); }, 100);
     Meteor.setTimeout(function() { user.getContacts(); }, 100);
     
-    console.log(data);
+    //console.log(data);
     //user.post(data.namespace, data.query);
     
     return true;

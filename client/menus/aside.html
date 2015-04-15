@@ -5,9 +5,11 @@
       <li><a class="sidebar-a" href="/manage/students">学生管理</a></li>
     </ul>
     <ul class="nav nav-sidebar">
-      {{#each item}}
-        {{> AsideMenuItem }}
-      {{/each}}
+      {{#if userIs "teacher"}}
+        {{#each item}}
+          {{> AsideMenuItem }}
+        {{/each}}
+      {{/if}}
     </ul>
   </div>
 </template>
