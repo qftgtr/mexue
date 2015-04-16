@@ -76,8 +76,10 @@ var getEvalFields = function(labels, editable, options) {
       headerClass: 'col-md-1 col-sm-1',
       cellClass: 'col-md-1 col-sm-1',
       fn: function(v,o) { 
-        var sum = 0;
-        for (var i = v.length; i--;) sum += v[i].score;
+        var sum = 0,
+            score = v[i].score;
+        score = score?score:0;
+        for (var i = v.length; i--;) sum += score;
         return sum;
       }
     });
