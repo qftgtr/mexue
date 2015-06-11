@@ -96,7 +96,8 @@ var getEvalFields = function(labels, editable, options) {
       cellClass: 'col-md-1 col-sm-1',
       fn: function(v,o) { 
         var sum = 0;
-        for (var i = v.length; i--;) sum += v[i].score||0;
+        for (var i = v.length; i--;)
+          sum += v[i].score||0;
         return sum;
       }
     });
@@ -105,7 +106,7 @@ var getEvalFields = function(labels, editable, options) {
   if (!(options && options.noComment)) {
     fields.push({
       key: 'teacherComment',
-      label: '评语',
+      label: '备注',
       sortable: false,
       headerClass: 'teacherComment',
       cellClass: 'eval-editable teacherComment'

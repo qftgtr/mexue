@@ -16,9 +16,8 @@ var initEval = function(studentId, classId) {
   var time = EvalDate.getWeek(new Date(), {format: 'value'}),
       semester = EvalDate.getSemester();
   DB.EvalRange.find().forEach(function(eval) {
-    var score = 5;
     var scores = eval.range.map(function(item, index) {
-      item.score = score;
+      item.score = item.max;
       item.index = index;
       return item;
     });

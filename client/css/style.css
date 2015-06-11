@@ -26,7 +26,7 @@ td, th {
 }
 
 .teacherComment:empty:before {
-  content: '点击添加评语';
+  content: '点击添加备注';
   color: #aaa;
 }
 
