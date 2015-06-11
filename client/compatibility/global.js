@@ -76,10 +76,12 @@ var getEvalFields = function(labels, editable, options) {
       headerClass: 'col-md-1 col-sm-1',
       cellClass: 'col-md-1 col-sm-1',
       fn: function(v,o) { 
-        var sum = 0,
-            score = v[i].score;
-        score = score?score:0;
-        for (var i = v.length; i--;) sum += score;
+        var sum = 0;
+        for (var i = v.length; i--;) {
+          var score = v[i].score;
+          score = score?score:0;
+          sum += score;
+        }
         return sum;
       }
     });
@@ -88,7 +90,7 @@ var getEvalFields = function(labels, editable, options) {
   if (!(options && options.noComment)) {
     fields.push({
       key: 'teacherComment',
-      label: '评语',
+      label: '备注',
       sortable: false,
       headerClass: 'teacherComment',
       cellClass: 'eval-editable teacherComment'

@@ -15,9 +15,8 @@ var initEval = function(studentId, classId) {
   var time = '',
       semester = EvalDate.getSemester();
   DB.EvalRange.find().forEach(function(eval) {
-    var score = eval.name==='作业'?1:'';
     var scores = eval.range.map(function(item, index) {
-      item.score = score;
+      item.score = item.max;
       item.index = index;
       return item;
     });
