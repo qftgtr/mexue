@@ -1,10 +1,18 @@
 var g;
 
 var clickToEdit = function(post, event, db) {
-  var clickedItem = event.target, // the clicked element
-      cNames = clickedItem.className.split(' '),
-      editable = cNames[0],
+  var clickedItem = event.target,
+      cNames = clickedItem.className.split(' ');
+  if (cNames[0] === 'fa') {
+    var value = cNames[2][0],
+        key = clickedItem.parentNode.className.split(' ')[1];
+    Meteor.call(db, {id: post._id, key: key, value: value});
+  }
+  
+  var editable = cNames[0],
       key = cNames[1];
+    
+      
 
   if (editable === 'eval-editable' && clickedItem.tagName === 'TD') { // check if already clicked
     var inputDiv = document.createElement('div');
@@ -56,16 +64,27 @@ var getEvalFields = function(labels, editable, options) {
   ];
   
   for (var i=0, len=labels.length; i<len; i++) {
-    (function(j){
-      fields.push({
-        key: 'scores.'+i+'.score',
-        label: labels[i],
-        sortable: false,
-        headerClass: 'scores-'+i + ' col-md-1 col-sm-1',
-        cellClass: (labels[i]?'eval-'+editable:'')+' scores-'+i + ' col-md-1 col-sm-1'
-        //fn: function(v,o) { return v[j]; }
-      });
-    }(i));
+    var evalItem= {
+      key: 'scores.'+i+'.score',
+      label: labels[i],
+      sortable: false,
+      headerClass: 'scores-'+i + ' col-md-1 col-sm-1',
+      cellClass: (labels[i]?'eval-'+editable:'')+' scores-'+i + ' col-md-1 col-sm-1',
+    };
+    
+    if (editable === 'rating') {
+      evalItem.fn = function(v,o) {
+        return new Handlebars.SafeString(
+          '<i class="fa fa-star'+(v>0?'':'-o')+' 1-fa"></i>'+
+          '<i class="fa fa-star'+(v>1?'':'-o')+' 2-fa"></i>'+
+          '<i class="fa fa-star'+(v>2?'':'-o')+' 3-fa"></i>'+
+          '<i class="fa fa-star'+(v>3?'':'-o')+' 4-fa"></i>'+
+          '<i class="fa fa-star'+(v>4?'':'-o')+' 5-fa"></i>'
+        );
+      };
+    }
+    
+    fields.push(evalItem);
   }
 
   if (!(options && options.noSum)) {
@@ -76,10 +95,8 @@ var getEvalFields = function(labels, editable, options) {
       headerClass: 'col-md-1 col-sm-1',
       cellClass: 'col-md-1 col-sm-1',
       fn: function(v,o) { 
-        var sum = 0,
-            score = v[i].score;
-        score = score?score:0;
-        for (var i = v.length; i--;) sum += score;
+        var sum = 0;
+        for (var i = v.length; i--;) sum += v[i].score||0;
         return sum;
       }
     });

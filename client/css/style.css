@@ -34,3 +34,15 @@ tbody {
   height: 600px;
   overflow-y: auto;
 }
+.navbar-brand {
+  color: white;
+}
+
+.semester {
+  width: auto;
+  margin: 8px;
+}
+
+.fa {
+  cursor: pointer;
+}

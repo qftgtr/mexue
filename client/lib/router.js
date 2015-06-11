@@ -5,9 +5,9 @@ Router.route('/', function () {
 });
 
 //Router.route('/about');
-Router.route('/manage/students', function() {
-  this.render('StudentManager');
-});
+//Router.route('/manage/students', function() {
+//  this.render('StudentManager');
+//});
 
 var routeTo = function(url, to) {
   Router.route(url, function() { this.render(to) });

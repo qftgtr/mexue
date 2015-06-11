@@ -9,18 +9,24 @@
           <span class="icon-bar"></span>
         </button>
         <span class="navbar-brand">中关村二小</span>
+        
+        <select name="year" class='form-control semester' onchange="Session.set({selectedSemester: this.value});">
+          <option value="2014b" selected>2014-2015 第二学期(当前)</option>
+          <option value="2015a">2015-2016 第一学期</option>
+        </select>
       </div>
       
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Profile</a></li>
+          <li><a href="#">{{currentDate}}</a></li>
+          <li><a href="#">{{realName}}</a></li>
           <li><a href="javascript:Meteor.logout();">退出</a></li>
         </ul>
+<!--
         <form class="navbar-form navbar-right">
           <input type="text" class="form-control" placeholder="Search...">
         </form>
+-->
       </div>
     </div>
   </nav>

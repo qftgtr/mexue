@@ -8,6 +8,7 @@ var headerMenuItems = [
 // 设置定栏显示内容
 Template.HeaderMenu.helpers({
   item: headerMenuItems,
+  realName: function() { return Meteor.user().profile.name; },
   currentDate: function() {
     var selectedTime = Session.get('selectedTime');
     return EvalDate.getMonthDate(selectedTime, {format: 1}) + ',' + EvalDate.getWeek(selectedTime, {format: 1}).join('--');

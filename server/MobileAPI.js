@@ -1,6 +1,6 @@
 mobileAPI = {
   new: function(url) {
-    var url = url || 'http://111.204.178.102:8080/mobile/api/';
+    var url = url || 'http://www.mexue.com/mobile/api/';
     
     var username, password, token, userId, realName, userType;
     
@@ -61,7 +61,7 @@ mobileAPI = {
       }}, function(error, result) {
         Meteor.users.update(accountId, {$set: {'profile.userInfo': result.data.userInfo}});
         classes = result.data.userInfo;
-        // console.log(classes);
+        //console.log(classes);
         for (var i = classes.length; i--; ) {
           var classId = classes[i].classId,
               name = classes[i].className;
@@ -71,7 +71,7 @@ mobileAPI = {
           var toNumber = { '一': 1, '二': 2, '三': 3, 
                            '四': 4, '五': 5, '六': 6 };
           DBmethods.upsertClass(classId, toNumber[t[0]], 
-                                parseInt(t[1],10), EvalDate.getSemester());
+                                parseInt(t[1],10), EvalDate.getSemester(), name);
         }
       });
     };
@@ -85,7 +85,7 @@ mobileAPI = {
           token: token
         }}, function(error, result) {
           var school = result.data.School[0];
-          //console.log(school.SchoolName);
+          //console.log(JSON.stringify(school));
           var classes = school.list;
           for (var i = classes.length; i--; ) {
             var contact = classes[i].contact;
@@ -93,9 +93,11 @@ mobileAPI = {
               if (contact[j].type === 'parent') {
                 var s = contact[j];
                 
-                //console.log(s);
+                          
+                var classId = DB.Classes.findOne({name: classes[i].name})._id;
+                console.log(classId);
                 //console.log(classes[i]);
-                DBmethods.upsertStudent(s.id, s.name, classes[i].id);
+                DBmethods.upsertStudent(s.id, s.name, classId);
               }
             }
           }

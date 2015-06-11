@@ -1,4 +1,4 @@
-var upsertClass = function(_id, g, c, semester) {
+var upsertClass = function(_id, g, c, semester, name) {
   if (DB.Classes.findOne(_id)) {
     return _id;
   } else {
@@ -6,16 +6,17 @@ var upsertClass = function(_id, g, c, semester) {
     return DB.Classes.insert({
       _id: _id,
       enrollIn: enrollIn,
-      class: c
+      class: c,
+      name: name
     });
   }
 };
 
 var initEval = function(studentId, classId) {
-  var time = '',
+  var time = EvalDate.getWeek(new Date(), {format: 'value'}),
       semester = EvalDate.getSemester();
   DB.EvalRange.find().forEach(function(eval) {
-    var score = eval.name==='作业'?1:'';
+    var score = 5;
     var scores = eval.range.map(function(item, index) {
       item.score = score;
       item.index = index;

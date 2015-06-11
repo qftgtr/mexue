@@ -5,6 +5,7 @@ Template.EvalHomework.helpers({
       collection: DB.EvalScores.find({
         evalName: '作业',
         semester: Session.get('selectedSemester'),
+        time: EvalDate.getWeek(Session.get('selectedTime'), {format: 'value'}),
         //time: Session.get('selectedTime'),
         classId: classFilter || { $exists: true }
       }),
@@ -12,7 +13,7 @@ Template.EvalHomework.helpers({
       rowsPerPage: 40,
       showFilter: true,
       showNavigationRowsPerPage: false,
-      fields: getEvalFields(indicators.hw, 'clickable')
+      fields: getEvalFields(indicators.hw, 'rating')
     };
   }
 });
